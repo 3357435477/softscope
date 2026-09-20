@@ -26,6 +26,15 @@ softscope scan --format csv --output reports/software.csv
 
 CSV is useful for spreadsheet review.
 
+## Filter Results
+
+```powershell
+softscope scan --filter microsoft
+softscope scan --filter "visual studio"
+```
+
+The filter matches words across application name, version, publisher, install path, and source. Multiple words must all be present somewhere in the record.
+
 ## Check Update Hints
 
 ```powershell

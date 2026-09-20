@@ -5,6 +5,7 @@ from pathlib import Path
 
 from softscope.collectors import collect_installed_software
 from softscope.exporters import write_report
+from softscope.filters import filter_records
 from softscope.winget import enrich_with_winget_updates
 
 
@@ -32,6 +33,11 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="use winget to add update availability hints when possible",
     )
+    scan.add_argument(
+        "--filter",
+        metavar="QUERY",
+        help="only include records matching this query",
+    )
     return parser
 
 
@@ -41,6 +47,8 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.command in {None, "scan"}:
         records = collect_installed_software()
+        if getattr(args, "filter", None):
+            records = filter_records(records, args.filter)
         if getattr(args, "updates", False):
             records = enrich_with_winget_updates(records)
         write_report(records, getattr(args, "format", "table"), getattr(args, "output", None))

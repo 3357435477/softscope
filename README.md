@@ -27,6 +27,13 @@ softscope scan --format json --output reports/software.json
 softscope scan --format csv --output reports/software.csv
 ```
 
+Filter a report:
+
+```powershell
+softscope scan --filter microsoft
+softscope scan --filter "visual studio"
+```
+
 Check update hints with Winget:
 
 ```powershell
